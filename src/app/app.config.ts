@@ -13,6 +13,7 @@ export const appConfig: ApplicationConfig = {
       clientId: '6TsyrvBe4z2SIZvDf3t43vgcXKrMPzIV',
       authorizationParams: {
         redirect_uri: window.location.origin,
+        audience: 'https://next-stop-khg/',
       },
       cacheLocation: 'localstorage', // Persist tokens across page reloads
   })]
