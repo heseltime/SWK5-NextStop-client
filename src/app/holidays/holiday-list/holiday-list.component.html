@@ -1,10 +1,3 @@
-<style>
-  mat-card h2 {
-    margin-bottom: 1rem;
-    margin-left: 1rem; 
-  }
-</style>
-
 <mat-card>
   <h2>Holiday List</h2>
   <table mat-table [dataSource]="holidays" class="mat-elevation-z8">
@@ -12,16 +5,18 @@
       <th mat-header-cell *matHeaderCellDef> ID </th>
       <td mat-cell *matCellDef="let holiday"> {{ holiday.id }} </td>
     </ng-container>
-      <ng-container matColumnDef="description">
+
+    <ng-container matColumnDef="description">
       <th mat-header-cell *matHeaderCellDef> Description </th>
       <td mat-cell *matCellDef="let holiday"> {{ holiday.description }} </td>
     </ng-container>
+
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef> Date </th>
       <td mat-cell *matCellDef="let holiday"> {{ holiday.date | date }} </td>
     </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 </mat-card>
-  

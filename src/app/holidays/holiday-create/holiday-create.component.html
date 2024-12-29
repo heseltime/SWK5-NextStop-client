@@ -1,7 +1,7 @@
 <mat-card>
     <h2>Create a New Holiday</h2>
     <form [formGroup]="holidayForm" (ngSubmit)="onSubmit()">
-      <mat-form-field appearance="fill">
+      <mat-form-field class="holiday-form-field" appearance="fill">
         <mat-label>Description</mat-label>
         <input matInput formControlName="description" placeholder="Enter holiday description" />
         <mat-error *ngIf="submitted && holidayForm.controls['description'].invalid">
@@ -9,7 +9,7 @@
         </mat-error>
       </mat-form-field>
   
-      <mat-form-field appearance="fill">
+      <mat-form-field class="holiday-form-field" appearance="fill">
         <mat-label>Date</mat-label>
         <input matInput formControlName="date" placeholder="Enter holiday date" type="date" />
         <mat-error *ngIf="submitted && holidayForm.controls['date'].invalid">
@@ -21,7 +21,9 @@
         Is this a school break?
       </mat-checkbox>
   
-      <button mat-raised-button color="primary" type="submit">Create Holiday</button>
+      <button mat-raised-button class="holiday-button" color="primary" type="submit">
+        Create Holiday
+      </button>
     </form>
   </mat-card>
   

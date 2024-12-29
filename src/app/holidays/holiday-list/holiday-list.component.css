@@ -1,0 +1,8 @@
+mat-card h2 {
+    margin-bottom: 1rem;
+    margin-left: 1rem; 
+}
+
+mat-card table {
+    padding: .5rem;
+}

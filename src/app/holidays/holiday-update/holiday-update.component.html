@@ -1,1 +1,37 @@
-<p>holiday-update works!</p>
+<mat-card>
+    <h2>Update Holiday</h2>
+    <form [formGroup]="holidayForm" (ngSubmit)="onSubmit()">
+      <mat-form-field class="holiday-form-field" appearance="fill">
+        <mat-label>Holiday ID</mat-label>
+        <input matInput formControlName="id" placeholder="Enter holiday ID" type="number" />
+        <mat-error *ngIf="submitted && holidayForm.controls['id'].invalid">
+          A valid ID is required.
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-form-field class="holiday-form-field" appearance="fill">
+        <mat-label>Description</mat-label>
+        <input matInput formControlName="description" placeholder="Enter holiday description" />
+        <mat-error *ngIf="submitted && holidayForm.controls['description'].invalid">
+          A description is required (min 3 characters).
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-form-field class="holiday-form-field" appearance="fill">
+        <mat-label>Date</mat-label>
+        <input matInput formControlName="date" placeholder="Enter holiday date" type="date" />
+        <mat-error *ngIf="submitted && holidayForm.controls['date'].invalid">
+          A valid date is required.
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-checkbox formControlName="isSchoolBreak">
+        Is this a school break?
+      </mat-checkbox>
+  
+      <button mat-raised-button class="holiday-button" color="primary" type="submit">
+        Update Holiday
+      </button>
+    </form>
+  </mat-card>
+  
