@@ -1,1 +1,13 @@
-<p>holidays works!</p>
+<div class="holiday-container">
+    <h1>Holiday List</h1>
+  
+    <!-- Add links or navigation for child routes -->
+    <nav>
+      <a [routerLink]="'view'" class="link">View Holidays</a> |
+      <a [routerLink]="'add'" class="link">Add Holiday</a>
+    </nav>
+  
+    <!-- Router outlet for child routes -->
+    <router-outlet></router-outlet>
+  </div>
+  
