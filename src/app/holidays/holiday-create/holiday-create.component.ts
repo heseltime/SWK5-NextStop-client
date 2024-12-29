@@ -2,10 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-holiday-create',
-  imports: [],
+  standalone: true,
   templateUrl: './holiday-create.component.html',
-  styleUrl: './holiday-create.component.css'
+  styleUrls: ['./holiday-create.component.css'],
 })
-export class HolidayCreateComponent {
-
-}
+export class HolidayCreateComponent {}

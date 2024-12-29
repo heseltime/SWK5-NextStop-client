@@ -2,10 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-holiday-update',
-  imports: [],
+  standalone: true,
   templateUrl: './holiday-update.component.html',
-  styleUrl: './holiday-update.component.css'
+  styleUrls: ['./holiday-update.component.css'],
 })
-export class HolidayUpdateComponent {
-
-}
+export class HolidayUpdateComponent {}

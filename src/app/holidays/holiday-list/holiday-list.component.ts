@@ -8,8 +8,8 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-holiday-list',
-  templateUrl: './holiday-list.component.html',
   standalone: true,
+  templateUrl: './holiday-list.component.html',
   imports: [
     CommonModule,
     MatTableModule,
@@ -28,7 +28,6 @@ export class HolidayListComponent implements OnInit {
   ngOnInit(): void {
     this.holidayService.getAllHolidays().subscribe({
       next: (data) => {
-        console.log('Fetched holidays:', data); // Debug log
         this.holidays = data;
       },
       error: (err) => {
