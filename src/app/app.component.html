@@ -67,6 +67,11 @@
     max-width: 30rem;
   }
 
+  .header-link:hover {
+    filter: brightness(1.2);
+    transition: color 0.5s ease;
+  }
+
   .content {
     display: flex;
     justify-content: space-around;
@@ -169,7 +174,48 @@
 
   .nav-bar {
     margin-top: 30px;
+    display: flex;
+    align-items: center;
   }
+
+    .nav-bar a {
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      margin-right: 1rem;
+    }
+
+    .nav-bar svg {
+      transition: transform 0.2s ease;
+    }
+
+    .nav-bar a:hover svg {
+      transform: scale(1.1);
+    }
+
+    .nav-bar .holidays-link {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.2rem 0.5rem;
+      background-color: var(--gray-400);
+      color: var(--gray-800);
+      text-decoration: none;
+      border-radius: 1rem;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .nav-bar .holidays-link:hover {
+      background-color: var(--gray-700);
+      color: #fff;
+    }
+
+    .nav-bar .holidays-link.active-tab {
+      background-color: var(--gray-700); /* Darker background */
+      color: #fff; /* White text */
+      font-weight: bold; /* Optional: Emphasize the active link */
+    }
 
   .admin-section {
     margin-top: 20px;
@@ -180,59 +226,65 @@
 <main class="main">
   <div class="content">
     <div class="left-side">
-      <svg
+      <a routerLink="/" class="header-link">
+        <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 982 239"
           fill="none"
           class="next-stop-logo"
         >
           <g clip-path="url(#a)">
-          <!-- Bus Icon -->
-          <rect x="20" y="60" width="80" height="120" rx="10" fill="url(#b)" />
-          <rect x="30" y="70" width="60" height="60" rx="5" fill="#FFF" />
-          <circle cx="40" cy="190" r="10" fill="#000" />
-          <circle cx="80" cy="190" r="10" fill="#000" />
-          <rect x="30" y="140" width="60" height="10" fill="#FFF" />
-          
-          <!-- Text -->
-          <text
-            x="140"
-            y="150"
-            font-size="72"
-            font-weight="bold"
-            text-anchor="start"
-            fill="url(#b)"
-            dy=".3em"
-          >
-            Next Stop KHG
-          </text>
-        </g>
-        <defs>
-          <linearGradient
-            id="b"
-            x1="0"
-            x2="982"
-            y1="192"
-            y2="192"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stop-color="#F0060B" />
-            <stop offset="0" stop-color="#F0070C" />
-            <stop offset=".526" stop-color="#CC26D5" />
-            <stop offset="1" stop-color="#7702FF" />
-          </linearGradient>
-          <clipPath id="a">
-            <rect width="982" height="239" fill="#fff" />
-          </clipPath>
-        </defs>
-      </svg>
+            <!-- Bus Icon -->
+            <rect x="20" y="60" width="80" height="120" rx="10" fill="url(#b)" />
+            <rect x="30" y="70" width="60" height="60" rx="5" fill="#FFF" />
+            <circle cx="40" cy="190" r="10" fill="#000" />
+            <circle cx="80" cy="190" r="10" fill="#000" />
+            <rect x="30" y="140" width="60" height="10" fill="#FFF" />
+      
+            <!-- Text -->
+            <text
+              x="140"
+              y="150"
+              font-size="72"
+              font-weight="bold"
+              text-anchor="start"
+              fill="url(#b)"
+              dy=".3em"
+            >
+              Next Stop KHG
+            </text>
+          </g>
+          <defs>
+            <linearGradient
+              id="b"
+              x1="0"
+              x2="982"
+              y1="192"
+              y2="192"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stop-color="#F0060B" />
+              <stop offset="0" stop-color="#F0070C" />
+              <stop offset=".526" stop-color="#CC26D5" />
+              <stop offset="1" stop-color="#7702FF" />
+            </linearGradient>
+            <clipPath id="a">
+              <rect width="982" height="239" fill="#fff" />
+            </clipPath>
+          </defs>
+        </svg>
+      </a>      
       <h1>Hello, {{ title }}</h1>
-      <p>Congratulations! Your app is running. 🎉</p>
+      <p>Get ready to go to the next KHG Event! 🎉</p>
+      
       <div class="nav-bar">
+        <!-- Show Login Button if not authenticated -->
         <a
-          href="/login"
+          href="javascript:void(0)"
           aria-label="User Login"
           rel="noopener"
+          (click)="login()"
+          *ngIf="!(auth.isAuthenticated$ | async)"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -251,7 +303,46 @@
             />
           </svg>
         </a>
-      </div>
+      
+        <!-- Show Logout Button if authenticated -->
+        <a
+          href="javascript:void(0)"
+          aria-label="User Logout"
+          rel="noopener"
+          (click)="logout()"
+          *ngIf="auth.isAuthenticated$ | async"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            alt="User Logout"
+          >
+            <!-- Door Icon for Logout -->
+            <rect x="4" y="4" width="16" height="16" rx="2" ry="2" fill="#000" />
+            <path
+              d="M10 12h8M14 8l4 4-4 4"
+              stroke="#FFF"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </a>
+      
+        <a
+          routerLink="/holidays"
+          routerLinkActive="active-tab"
+          class="holidays-link"
+          *ngIf="auth.isAuthenticated$ | async"
+        >
+          Holidays
+        </a>
+
+      </div>      
+           
       
       <div class="admin-section">
         <router-outlet></router-outlet>

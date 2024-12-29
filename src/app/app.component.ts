@@ -1,14 +1,30 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { RouterModule } from '@angular/router'; // Import RouterModule
-import { routes } from './app.routes'; // Import your routes configuration
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common'; // Import CommonModule
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterModule],
+  standalone: true,
+  imports: [
+    RouterOutlet,
+    RouterModule,
+    CommonModule, // Add CommonModule for async pipe
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'swk5-nextstop';
+  title = 'Next Stop KHG'; // name of the bus stop in the future
+
+  constructor(public auth: AuthService) {}
+
+  login(): void {
+    this.auth.loginWithRedirect();
+  }
+
+  logout(): void {
+    this.auth.logout({ logoutParams: { returnTo: window.location.origin } });
+  }
 }

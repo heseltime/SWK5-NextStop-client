@@ -1,5 +1,8 @@
 # Swk5Nextstop
 
+> [!NOTE]  
+> Documentation as notes and PDF submission separately from this project: below you will find standard (CLI-generated) setup instructions.
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
 
 ## Development server
