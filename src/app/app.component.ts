@@ -106,7 +106,10 @@ export class AppComponent implements OnInit, OnDestroy {
         this.routeStopSchedules = data[0]?.routeStopSchedules || [];
         this.fetchRouteDetails(data[0]?.routeId);
       },
-      error: (err) => console.error('Error fetching connections:', err),
+      error: (err) => {
+        console.error('Error fetching connections:', err);
+        this.routeStopSchedules = [];
+      },
     });
   }
 
