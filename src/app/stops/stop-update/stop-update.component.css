@@ -1,0 +1,14 @@
+mat-card {
+    margin: 16px;
+    padding: 16px;
+  }
+  
+  .stop-form-field {
+    display: block;
+    margin-bottom: 16px;
+  }
+  
+  .stop-button {
+    margin-top: 16px;
+  }
+  

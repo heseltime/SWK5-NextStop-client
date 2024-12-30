@@ -192,7 +192,7 @@
       transform: scale(1.1);
     }
 
-    .nav-bar .holidays-link {
+    .nav-bar .nav-link {
       display: inline-flex;
       align-items: center;
       padding: 0.2rem 0.5rem;
@@ -205,12 +205,12 @@
       transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    .nav-bar .holidays-link:hover {
+    .nav-bar .nav-link:hover {
       background-color: var(--gray-700);
       color: #fff;
     }
 
-    .nav-bar .holidays-link.active-tab {
+    .nav-bar .nav-link.active-tab {
       background-color: var(--gray-700); /* Darker background */
       color: #fff; /* White text */
       font-weight: bold; /* Optional: Emphasize the active link */

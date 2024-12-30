@@ -1,0 +1,42 @@
+<mat-card>
+    <h2>Update Stop</h2>
+    <form [formGroup]="stopForm" (ngSubmit)="onSubmit()">
+      <mat-form-field class="stop-form-field" appearance="fill">
+        <mat-label>Stop ID</mat-label>
+        <input matInput formControlName="stopId" placeholder="Enter stop ID" type="number" />
+        <mat-error *ngIf="submitted && stopForm.controls['stopId'].invalid">
+          A valid ID is required.
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-form-field class="stop-form-field" appearance="fill">
+        <mat-label>Stop Name</mat-label>
+        <input matInput formControlName="name" placeholder="Enter stop name" />
+        <mat-error *ngIf="submitted && stopForm.controls['name'].invalid">
+          A stop name is required (min 3 characters).
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-form-field class="stop-form-field" appearance="fill">
+        <mat-label>Short Name</mat-label>
+        <input matInput formControlName="shortName" placeholder="Enter stop short name" />
+        <mat-error *ngIf="submitted && stopForm.controls['shortName'].invalid">
+          A short name is required.
+        </mat-error>
+      </mat-form-field>
+      
+      <p>This field is set to KHG's (KHG Center Franz Jägerstätter) GPS coordinates already:</p>
+      <mat-form-field class="stop-form-field" appearance="fill">
+        <mat-label>GPS Coordinates</mat-label>
+        <input matInput formControlName="gpsCoordinates" placeholder="Enter GPS coordinates" />
+        <mat-error *ngIf="submitted && stopForm.controls['gpsCoordinates'].invalid">
+          GPS coordinates are required.
+        </mat-error>
+      </mat-form-field>
+  
+      <button mat-raised-button class="stop-button" color="primary" type="submit">
+        Update Stop
+      </button>
+    </form>
+  </mat-card>
+  

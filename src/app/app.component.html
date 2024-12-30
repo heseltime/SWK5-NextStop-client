@@ -123,10 +123,19 @@
         <a
           routerLink="/holidays/list"
           routerLinkActive="active-tab"
-          class="holidays-link"
+          class="nav-link"
           *ngIf="auth.isAuthenticated$ | async"
         >
           Holidays
+        </a>
+
+        <a
+          routerLink="/stops/list"
+          routerLinkActive="active-tab"
+          class="nav-link"
+          *ngIf="auth.isAuthenticated$ | async"
+        >
+          Stops
         </a>
 
       </div>      

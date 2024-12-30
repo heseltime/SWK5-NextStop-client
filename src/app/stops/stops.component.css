@@ -1,6 +1,4 @@
-
-<style>
-  .admin-section-container {
+.admin-section-container {
     margin: 2rem; 
     font-family: 'Inter', sans-serif; 
   }
@@ -38,17 +36,3 @@
     color: white; 
     font-weight: bold; 
   }
-</style>
-
-<div class="admin-section-container">
-  <h1>Holiday Management</h1>
-
-  <nav>
-    <a [routerLink]="['list']" routerLinkActive="active-tab" class="link">View Holidays</a>
-    <a [routerLink]="['create']" routerLinkActive="active-tab" class="link">Add Holiday</a>
-    <a [routerLink]="['update']" routerLinkActive="active-tab" class="link">Update Holiday</a>
-  </nav>
-
-  <router-outlet></router-outlet>
-</div>
-

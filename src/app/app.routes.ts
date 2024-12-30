@@ -3,5 +3,6 @@ import { HolidayListComponent } from './holidays/holiday-list/holiday-list.compo
 
 export const routes: Routes = [
     { path: 'holidays', loadChildren: () => import('./holidays/holidays.module').then(m => m.HolidaysModule) },
-    { path: '**', redirectTo: '' },
+    { path: 'stops', loadChildren: () => import('./stops/stops.module').then(m => m.StopsModule) },
+    { path: '**', redirectTo: 'holidays' },
   ];  
