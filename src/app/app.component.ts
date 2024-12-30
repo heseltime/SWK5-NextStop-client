@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { RouterOutlet } from '@angular/router';
-import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Import FormsModule
+import { FormsModule } from '@angular/forms';
 import { AuthService } from '@auth0/auth0-angular';
 import { ScheduleService } from './services/schedule.service';
 import { StopService } from './services/stop.service';
@@ -13,7 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, CommonModule, FormsModule, MatSelectModule], // Add FormsModule here
+  imports: [RouterOutlet, RouterModule, CommonModule, FormsModule, MatSelectModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
@@ -30,27 +30,37 @@ export class AppComponent implements OnInit, OnDestroy {
 
   scheduleId!: number;
   routeStopSchedules: Array<{ stopId: number; sequenceNumber: number; time: string }> = [];
-  stopList: Array<{ stopId: number; name: string }> = []; // Full list of stops
-  stopNames: { [stopId: number]: string } = {}; // Maps stopId to stopName
+  stopList: Array<{ stopId: number; name: string }> = [];
+  stopNames: { [stopId: number]: string } = {};
 
   constructor(
     public auth: AuthService,
     private scheduleService: ScheduleService,
     private stopService: StopService,
-    private routeService: RouteService
+    private routeService: RouteService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     // Fetch all stops at the start
     this.fetchAllStops();
 
+    // Read stopId from query params
+    this.route.queryParams.subscribe((params) => {
+      const stopIdParam = params['stopId'];
+      if (stopIdParam) {
+        this.stopId = +stopIdParam; // Use the provided stopId
+      } else {
+        // Set a random stopId after stops are loaded
+        this.stopId = 11; // Temporary, will be set in fetchAllStops
+      }
+    });
+
     // Fetch data every 30 seconds
     this.scheduleSubscription = interval(30000).subscribe(() => {
       this.fetchNextConnections();
     });
-
-    this.stopId = 11; // Default stop ID
-    this.fetchNextConnections();
   }
 
   ngOnDestroy(): void {
@@ -63,24 +73,31 @@ export class AppComponent implements OnInit, OnDestroy {
     this.stopService.getAllStops().subscribe({
       next: (stops) => {
         this.stopList = stops;
-  
+
         // Populate the stopNames object
         stops.forEach((stop) => {
           this.stopNames[stop.stopId] = stop.name;
         });
-  
-        // Set default stop name and title if applicable
-        const defaultStop = stops.find((stop) => stop.stopId === this.stopId);
-        if (defaultStop) {
-          this.stopName = defaultStop.name;
-          this.title = this.stopName; // Set title to the default stop name
+
+        // Set stopId to a random value if not provided
+        if (!this.stopId) {
+          const randomStop = stops[Math.floor(Math.random() * stops.length)];
+          this.stopId = randomStop.stopId;
         }
+
+        // Set stopName and title
+        const selectedStop = stops.find((stop) => stop.stopId === this.stopId);
+        if (selectedStop) {
+          this.stopName = selectedStop.name;
+          this.title = this.stopName;
+        }
+
+        // Fetch the initial connections
+        this.fetchNextConnections();
       },
       error: (err) => console.error('Error fetching all stops:', err),
     });
   }
-  
-  
 
   fetchNextConnections(): void {
     this.scheduleService.getNextConnections(this.stopId).subscribe({
@@ -96,14 +113,20 @@ export class AppComponent implements OnInit, OnDestroy {
   onStopChange(selectedValue: number): void {
     if (selectedValue) {
       this.stopId = selectedValue; // Set stopId to the selected value
-      console.log(this.stopId);
-  
+
       const selectedStop = this.stopList.find((stop) => stop.stopId === this.stopId);
       this.stopName = selectedStop?.name || 'Unknown Stop';
-      this.title = this.stopName; // Update the title to the selected stop name
+      this.title = this.stopName;
+
+      // Update query parameter
+      this.router.navigate([], {
+        queryParams: { stopId: this.stopId },
+        queryParamsHandling: 'merge', // Merge with existing query params
+      });
+
       this.fetchNextConnections();
     }
-  } 
+  }
 
   fetchRouteDetails(routeId: number): void {
     this.routeService.getRouteById(routeId).subscribe(
