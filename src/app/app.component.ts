@@ -3,7 +3,8 @@ import { RouterOutlet } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common'; // Import CommonModule
 import { AuthService } from '@auth0/auth0-angular';
-import { ScheduleService } from './services/schedule.service'; // Import the service
+import { ScheduleService } from './services/schedule.service';
+import { StopService } from './services/stop.service';
 import { interval, Subscription } from 'rxjs';
 
 export interface ScheduleResponse {
@@ -23,7 +24,7 @@ export interface ScheduleResponse {
   imports: [
     RouterOutlet,
     RouterModule,
-    CommonModule, // Add CommonModule for async pipe
+    CommonModule,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
@@ -32,10 +33,18 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'Next Stop KHG';
   private scheduleSubscription!: Subscription;
 
-  scheduleId!: number; // Holds the schedule ID
-  routeStopSchedules: ScheduleResponse['routeStopSchedules'] = []; // Holds route stop schedules
+  stopId!: number;
+  stopName!: string;
 
-  constructor(public auth: AuthService, private scheduleService: ScheduleService) {}
+  scheduleId!: number;
+  routeStopSchedules: ScheduleResponse['routeStopSchedules'] = [];
+  stopNames: { [stopId: number]: string } = {}; // Cache for stop names
+
+  constructor(
+    public auth: AuthService,
+    private scheduleService: ScheduleService,
+    private stopService: StopService
+  ) {}
 
   ngOnInit(): void {
     // Fetch data every 30 seconds
@@ -43,31 +52,52 @@ export class AppComponent implements OnInit, OnDestroy {
       this.fetchNextConnections();
     });
 
+    this.stopId = 11;
+
     // Fetch immediately on component load
     this.fetchNextConnections();
+    this.fetchStopName(this.stopId);
   }
 
   ngOnDestroy(): void {
-    // Unsubscribe to prevent memory leaks
     if (this.scheduleSubscription) {
       this.scheduleSubscription.unsubscribe();
     }
   }
 
   fetchNextConnections(): void {
-    const stopId = 11; // Replace with the actual stop ID
-    this.scheduleService.getNextConnections(stopId).subscribe({
+    this.scheduleService.getNextConnections(this.stopId).subscribe({
       next: (data: ScheduleResponse[]) => {
-        console.log('Full API Response:', data);
-
-        // Extract data using the typed response: comes back as array
         this.scheduleId = data[0].scheduleId;
         this.routeStopSchedules = data[0].routeStopSchedules;
 
-        console.log('Extracted scheduleId:', this.scheduleId);
-        console.log('Extracted routeStopSchedules:', this.routeStopSchedules);
+        // Fetch names for all stops in the route
+        this.routeStopSchedules.forEach((stop) => {
+          if (!this.stopNames[stop.stopId]) {
+            this.fetchStopNameForId(stop.stopId);
+          }
+        });
       },
       error: (err) => console.error('Error fetching connections:', err),
+    });
+  }
+
+  fetchStopNameForId(stopId: number): void {
+    this.stopService.getStopById(stopId).subscribe({
+      next: (stop) => {
+        this.stopNames[stopId] = stop.name;
+      },
+      error: (err) => console.error(`Error fetching stop name for ID ${stopId}:`, err),
+    });
+  }
+
+  fetchStopName(stopId: number): void {
+    this.stopService.getStopById(stopId).subscribe({
+      next: (stop) => {
+        this.stopName = stop.name;
+        this.title = this.stopName;
+      },
+      error: (err) => console.error('Error fetching stop:', err),
     });
   }
 

@@ -415,25 +415,30 @@
       </div>
 
       <div *ngIf="scheduleId">
+        <p>Upcoming ...</p>
+
         <h2>Schedule ID: {{ scheduleId }}</h2>
       </div>
     
       <div class="pill-group" *ngIf="routeStopSchedules.length > 0">
         <p>Stop | time to leave:</p>
-
+      
         <a
           class="pill"
           *ngFor="let stop of routeStopSchedules"
           href="#"
         >
-          <span class="icon">🚌 Stop {{ stop.stopId }} | {{ stop.time }}</span>
+          <span class="icon">
+            🚌 {{ stopNames[stop.stopId] || 'Loading...' }} at {{ stop.time }}
+          </span>
         </a>
-      </div>      
+      </div>
+         
     
       <div *ngIf="routeStopSchedules.length === 0">
         <p>No route stop schedules available.</p>
       </div>
-      
+
     </div>
   </div>
 </main>
