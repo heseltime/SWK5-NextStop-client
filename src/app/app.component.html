@@ -415,9 +415,9 @@
       </div>
 
       <div *ngIf="scheduleId">
-        <p>Upcoming ...</p>
+        <p>Upcoming! 🎉</p>
 
-        <h2>Schedule ID: {{ scheduleId }}</h2>
+        <h2>{{ routeName || '...' }}</h2>
       </div>
     
       <div class="pill-group" *ngIf="routeStopSchedules.length > 0">

@@ -6,6 +6,7 @@ import { AuthService } from '@auth0/auth0-angular';
 import { ScheduleService } from './services/schedule.service';
 import { StopService } from './services/stop.service';
 import { interval, Subscription } from 'rxjs';
+import { RouteService } from './services/route.service';
 
 export interface ScheduleResponse {
   scheduleId: number;
@@ -36,6 +37,10 @@ export class AppComponent implements OnInit, OnDestroy {
   stopId!: number;
   stopName!: string;
 
+  routeId: number = 1; // Example route ID
+  routeData: any;
+  routeName: string = "";
+
   scheduleId!: number;
   routeStopSchedules: ScheduleResponse['routeStopSchedules'] = [];
   stopNames: { [stopId: number]: string } = {}; // Cache for stop names
@@ -43,7 +48,8 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     public auth: AuthService,
     private scheduleService: ScheduleService,
-    private stopService: StopService
+    private stopService: StopService,
+    private routeService: RouteService,
   ) {}
 
   ngOnInit(): void {
@@ -52,10 +58,9 @@ export class AppComponent implements OnInit, OnDestroy {
       this.fetchNextConnections();
     });
 
-    this.stopId = 11;
+    this.stopId = 11; // maybe randomize
 
-    // Fetch immediately on component load
-    this.fetchNextConnections();
+    this.fetchNextConnections(); // calls fetchRouteDetails
     this.fetchStopName(this.stopId);
   }
 
@@ -77,6 +82,9 @@ export class AppComponent implements OnInit, OnDestroy {
             this.fetchStopNameForId(stop.stopId);
           }
         });
+
+        // Also get route info
+        this.fetchRouteDetails(data[0].routeId);
       },
       error: (err) => console.error('Error fetching connections:', err),
     });
@@ -99,6 +107,19 @@ export class AppComponent implements OnInit, OnDestroy {
       },
       error: (err) => console.error('Error fetching stop:', err),
     });
+  }
+
+  fetchRouteDetails(routeId: number): void {
+    this.routeService.getRouteById(routeId).subscribe(
+      (route) => {
+        this.routeData = route;
+        this.routeName = route.routeNumber; // ..
+        //console.log('Route Name:', this.routeName);
+      },
+      (error) => {
+        console.error('Error fetching route:', error);
+      }
+    );
   }
 
   login(): void {
