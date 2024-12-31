@@ -205,6 +205,15 @@
       transition: background-color 0.3s ease, color 0.3s ease;
     }
 
+    .nav-bar .nav-link + .special {
+      background-color: #C8163E;
+      color: #fff;
+    }
+
+    .nav-bar .nav-link + .special:hover {
+      background-color: #A124D8;
+    }
+
     .nav-bar .nav-link:hover {
       background-color: var(--gray-700);
       color: #fff;

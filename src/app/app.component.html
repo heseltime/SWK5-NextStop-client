@@ -147,6 +147,15 @@
           Routes
         </a>
 
+        <a
+          routerLink="/schedules/list"
+          routerLinkActive="active-tab"
+          class="nav-link special"
+          *ngIf="auth.isAuthenticated$ | async"
+        >
+          Schedules
+        </a>
+
       </div>      
            
       
@@ -235,7 +244,7 @@
           href="#"
         >
           <span class="icon">
-            🚌 {{ stopNames[stop.stopId] || 'Unknown Stop' }} at {{ stop.time }}
+            🚌 {{ stopNames[stop.stopId] || 'Unknown Stop' }} at {{ stop.time.hour }}:{{ stop.time.minute }}
           </span>
         </a>
       </div>

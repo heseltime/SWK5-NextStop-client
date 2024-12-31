@@ -1,0 +1,63 @@
+<mat-card>
+    <h2>Create a New Schedule</h2>
+    <form [formGroup]="scheduleForm" (ngSubmit)="onSubmit()">
+      <mat-form-field class="schedule-form-field" appearance="fill">
+        <mat-label>Route ID</mat-label>
+        <input matInput formControlName="routeId" placeholder="Enter route ID" type="number" />
+        <mat-error *ngIf="submitted && scheduleForm.controls['routeId'].invalid">
+          A route ID is required.
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-form-field class="schedule-form-field" appearance="fill">
+        <mat-label>Date</mat-label>
+        <input matInput formControlName="date" placeholder="Enter date" type="date" />
+        <mat-error *ngIf="submitted && scheduleForm.controls['date'].invalid">
+          A valid date is required.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="schedule-form-field" appearance="fill">
+        <mat-label>Validity Start</mat-label>
+        <input matInput formControlName="validityStart" placeholder="Enter validity start date" type="date" />
+        <mat-error *ngIf="submitted && scheduleForm.controls['validity_start'].invalid">
+          A valid start date is required.
+        </mat-error>
+      </mat-form-field>
+      
+      <mat-form-field class="schedule-form-field" appearance="fill">
+        <mat-label>Validity Stop</mat-label>
+        <input matInput formControlName="validityStop" placeholder="Enter validity stop date" type="date" />
+        <mat-error *ngIf="submitted && scheduleForm.controls['validity_stop'].invalid">
+          A valid stop date is required.
+        </mat-error>
+      </mat-form-field>      
+  
+      <h3>Route Stop Schedules</h3>
+      <ng-container formArrayName="routeStopSchedules">
+        <div *ngFor="let group of routeStopSchedules.controls; let i = index" [formGroupName]="i">
+          <mat-form-field appearance="fill">
+            <mat-label>Stop ID</mat-label>
+            <input matInput formControlName="stopId" readonly />
+          </mat-form-field>
+      
+          <mat-form-field appearance="fill">
+            <mat-label>Sequence Number</mat-label>
+            <input matInput formControlName="sequenceNumber" readonly />
+          </mat-form-field>
+      
+          <mat-form-field appearance="fill">
+            <mat-label>Time</mat-label>
+            <input matInput formControlName="time" type="time" />
+          </mat-form-field>
+        </div>
+      </ng-container>       
+      
+      <!--<button mat-raised-button color="primary" type="submit" (click)="logForm()">Debug Form</button>-->
+  
+      <button mat-raised-button class="schedule-button" color="primary" type="submit">
+        Create Schedule
+      </button>
+    </form>
+  </mat-card>
+  

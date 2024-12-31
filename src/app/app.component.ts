@@ -29,7 +29,7 @@ export class AppComponent implements OnInit, OnDestroy {
   routeName: string = '';
 
   scheduleId!: number;
-  routeStopSchedules: Array<{ stopId: number; sequenceNumber: number; time: string }> = [];
+  routeStopSchedules: Array<{ stopId: number; sequenceNumber: number; time: any }> = [];
   stopList: Array<{ stopId: number; name: string }> = [];
   stopNames: { [stopId: number]: string } = {};
 

@@ -1,0 +1,38 @@
+.admin-section-container {
+    margin: 2rem; 
+    font-family: 'Inter', sans-serif; 
+  }
+
+  .admin-section-container h1 {
+    text-align: center; 
+    margin-bottom: 1.5rem; 
+    color: var(--gray-900); 
+    font-size: 2rem; 
+  }
+
+  .admin-section-container nav {
+    display: flex; 
+    justify-content: center;
+    gap: 1rem; 
+    margin: 1.5rem 0; 
+  }
+
+  .admin-section-container nav .link {
+    text-decoration: none; 
+    color: var(--bright-blue); 
+    font-size: 1.1rem; 
+    padding: 0.5rem 1rem; 
+    border-radius: 0.5rem; 
+    transition: background-color 0.3s ease, color 0.3s ease; 
+  }
+
+  .admin-section-container nav .link:hover {
+    background-color: var(--gray-400); 
+    color: var(--gray-900); 
+  }
+
+  .admin-section-container nav .link.active-tab {
+    background-color: var(--bright-blue);
+    color: white; 
+    font-weight: bold; 
+  }

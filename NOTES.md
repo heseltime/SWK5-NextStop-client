@@ -14,3 +14,11 @@ at first two-tier authorisation was considered (special admins group), but then 
 # learnings
 
 not always using DTOs on client side, instead relying on form functionality to shape data here and let backend take over the validation
+
+# id-base
+
+update forms refer to ids but it would be better to get relevant object
+
+# changes to make application easier
+
+remove validity start/stop as required fields on the schedule. now schedules are simply set for date/times (per stop). this lends itself to the event management idea: fewer reocurring events, more single events, however, which is a nice side effect for my purposes.
