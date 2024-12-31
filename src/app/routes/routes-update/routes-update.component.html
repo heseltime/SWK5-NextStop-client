@@ -1,0 +1,91 @@
+<mat-card>
+  <h2>Update Route</h2>
+  <form [formGroup]="routeForm" (ngSubmit)="onSubmit()">
+    <!-- Route ID -->
+    <mat-form-field appearance="fill">
+      <mat-label>Route ID</mat-label>
+      <input matInput formControlName="routeId" placeholder="Enter route ID" type="number" />
+      <mat-error *ngIf="submitted && routeForm.controls['routeId'].invalid">
+        Route ID is required.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Route Number -->
+    <mat-form-field appearance="fill">
+      <mat-label>Route Number</mat-label>
+      <input matInput formControlName="routeNumber" placeholder="Enter route number" />
+      <mat-error *ngIf="submitted && routeForm.controls['routeNumber'].invalid">
+        A valid route number is required (min 3 characters).
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Validity Period -->
+    <mat-form-field appearance="fill">
+      <mat-label>Validity Period</mat-label>
+      <input matInput formControlName="validityPeriod" placeholder="Enter validity period" />
+      <mat-error *ngIf="submitted && routeForm.controls['validityPeriod'].invalid">
+        Validity period is required.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Day Validity -->
+    <mat-form-field appearance="fill">
+      <mat-label>Day Validity</mat-label>
+      <input matInput formControlName="dayValidity" placeholder="Enter day validity (e.g., Weekends)" />
+      <mat-error *ngIf="submitted && routeForm.controls['dayValidity'].invalid">
+        Day validity is required.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Company ID -->
+    <mat-form-field appearance="fill">
+      <mat-label>Company ID</mat-label>
+      <input matInput formControlName="companyId" placeholder="Enter company ID" type="number" />
+      <mat-error *ngIf="submitted && routeForm.controls['companyId'].invalid">
+        Company ID is required.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Company Name -->
+    <mat-form-field appearance="fill">
+      <mat-label>Company Name</mat-label>
+      <input matInput formControlName="companyName" placeholder="Enter company name" />
+      <mat-error *ngIf="submitted && routeForm.controls['companyName'].invalid">
+        Company name is required.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Route Stops -->
+    <h3>Route Stops</h3>
+    <div formArrayName="routeStops">
+      <div *ngFor="let stop of routeStops.controls; let i = index" [formGroupName]="i">
+        <!-- Stop ID -->
+        <mat-form-field appearance="fill">
+          <mat-label>Stop ID</mat-label>
+          <input matInput formControlName="stopId" placeholder="Enter stop ID" type="number" />
+          <mat-error *ngIf="submitted && stop.invalid">
+            Stop ID is required.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Sequence Number -->
+        <mat-form-field appearance="fill">
+          <mat-label>Sequence Number</mat-label>
+          <input matInput formControlName="sequenceNumber" placeholder="Enter sequence number" type="number" />
+          <mat-error *ngIf="submitted && stop.invalid">
+            Sequence number is required.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Remove Stop Button -->
+        <button mat-button color="warn" (click)="removeStop(i)">Remove Stop</button>
+      </div>
+    </div>
+
+    <!-- Add Stop Button -->
+    <button mat-button color="primary" (click)="addStop()">Add Stop</button>
+
+    <!-- Submit Button -->
+    <button mat-raised-button color="primary" type="submit">Update Route</button>
+  </form>
+</mat-card>

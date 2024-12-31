@@ -15,13 +15,13 @@ export class HolidayService {
 
   getAllHolidays(): Observable<any[]> {
     return this.http.get<any[]>(this.baseUrl).pipe(
-      tap((data) => console.log('Fetched holidays:', data))
+      //tap((data) => console.log('Fetched holidays:', data))
     );
   }
 
   getHolidayById(id: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/${id}`).pipe(
-      tap((data) => console.log(`Fetched holiday by ID (${id}):`, data))
+      //tap((data) => console.log(`Fetched holiday by ID (${id}):`, data))
     );
   }
 
@@ -34,7 +34,7 @@ export class HolidayService {
         });
         return this.http.post<any>(this.baseUrl, holiday, { headers });
       }),
-      tap((data) => console.log('Created holiday:', data)) // Log the response
+      //tap((data) => console.log('Created holiday:', data)) // Log the response
     );
   }
 
@@ -46,7 +46,7 @@ export class HolidayService {
         });
         return this.http.put<any>(`${this.baseUrl}/${id}`, holiday, { headers });
       }),
-      tap((data) => console.log(`Updated holiday ID (${id}):`, data))
+      //tap((data) => console.log(`Updated holiday ID (${id}):`, data))
     );
   }
 }

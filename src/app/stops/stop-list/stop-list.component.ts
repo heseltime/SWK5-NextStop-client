@@ -29,7 +29,7 @@ export class StopListComponent implements OnInit {
     this.stopService.getAllStops().subscribe({
       next: (data) => {
         this.stops = data;
-        console.log(data);
+        //console.log(data);
       },
       error: (err) => {
         console.error('Error fetching stops:', err);

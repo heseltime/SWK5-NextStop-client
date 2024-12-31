@@ -1,0 +1,12 @@
+<div class="admin-section-container">
+    <h1>Route Management</h1>
+    
+    <nav>
+        <a [routerLink]="['list']" routerLinkActive="active-tab" class="link">View Routes</a>
+        <a [routerLink]="['create']" routerLinkActive="active-tab" class="link">Add Route</a>
+        <a [routerLink]="['update']" routerLinkActive="active-tab" class="link">Update Route</a>
+    </nav>
+    
+    <router-outlet></router-outlet>
+</div>
+      

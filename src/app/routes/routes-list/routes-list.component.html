@@ -1,0 +1,32 @@
+<mat-card>
+    <h2>Route List</h2>
+    <table mat-table [dataSource]="routes" class="mat-elevation-z8">
+      <!-- Route ID Column -->
+      <ng-container matColumnDef="routeId">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let route"> {{ route.routeId }} </td>
+      </ng-container>
+  
+      <!-- Route Number Column -->
+      <ng-container matColumnDef="routeNumber">
+        <th mat-header-cell *matHeaderCellDef> Route Number </th>
+        <td mat-cell *matCellDef="let route"> {{ route.routeNumber }} </td>
+      </ng-container>
+  
+      <!-- Validity Period Column -->
+      <ng-container matColumnDef="validityPeriod">
+        <th mat-header-cell *matHeaderCellDef> Validity Period </th>
+        <td mat-cell *matCellDef="let route"> {{ route.validityPeriod }} </td>
+      </ng-container>
+  
+      <!-- Day Validity Column -->
+      <ng-container matColumnDef="dayValidity">
+        <th mat-header-cell *matHeaderCellDef> Day Validity </th>
+        <td mat-cell *matCellDef="let route"> {{ route.dayValidity }} </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-card>
+  

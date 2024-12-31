@@ -1,0 +1,66 @@
+<mat-card>
+    <h2>Create a New Route</h2>
+    <form [formGroup]="routeForm" (ngSubmit)="onSubmit()">
+      <mat-form-field class="route-form-field" appearance="fill">
+        <mat-label>Route ID</mat-label>
+        <input matInput formControlName="routeId" placeholder="Enter route ID" type="number" />
+        <mat-error *ngIf="submitted && routeForm.controls['routeId'].invalid">
+          A valid route ID is required.
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-form-field class="route-form-field" appearance="fill">
+        <mat-label>Route Number</mat-label>
+        <input matInput formControlName="routeNumber" placeholder="Enter route number" />
+        <mat-error *ngIf="submitted && routeForm.controls['routeNumber'].invalid">
+          A route number is required (min 3 characters).
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-form-field class="route-form-field" appearance="fill">
+        <mat-label>Validity Period</mat-label>
+        <input matInput formControlName="validityPeriod" placeholder="Enter validity period" />
+      </mat-form-field>
+  
+      <mat-form-field class="route-form-field" appearance="fill">
+        <mat-label>Day Validity</mat-label>
+        <input matInput formControlName="dayValidity" placeholder="Enter day validity (e.g., Weekends)" />
+      </mat-form-field>
+  
+      <mat-form-field class="route-form-field" appearance="fill">
+        <mat-label>Company ID</mat-label>
+        <input matInput formControlName="companyId" placeholder="Enter company ID" type="number" />
+      </mat-form-field>
+  
+      <mat-form-field class="route-form-field" appearance="fill">
+        <mat-label>Company Name</mat-label>
+        <input matInput formControlName="companyName" placeholder="Enter company name" />
+        <mat-error *ngIf="submitted && routeForm.controls['companyName'].invalid">
+          A company name is required.
+        </mat-error>
+      </mat-form-field>
+  
+      <h3>Route Stops</h3>
+      <div formArrayName="routeStops">
+        <div *ngFor="let stop of routeStops.controls; let i = index" [formGroupName]="i">
+          <mat-form-field appearance="fill">
+            <mat-label>Stop ID</mat-label>
+            <input matInput formControlName="stopId" placeholder="Enter stop ID" type="number" />
+          </mat-form-field>
+  
+          <mat-form-field appearance="fill">
+            <mat-label>Sequence Number</mat-label>
+            <input matInput formControlName="sequenceNumber" placeholder="Enter sequence number" type="number" />
+          </mat-form-field>
+  
+          <button mat-button color="warn" (click)="removeStop(i)">Remove Stop</button>
+        </div>
+      </div>
+      <button mat-button color="primary" (click)="addStop()">Add Stop</button>
+  
+      <button mat-raised-button class="route-button" color="primary" type="submit">
+        Create Route
+      </button>
+    </form>
+  </mat-card>
+  

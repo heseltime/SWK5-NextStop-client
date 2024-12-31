@@ -138,6 +138,15 @@
           Stops
         </a>
 
+        <a
+          routerLink="/routes/list"
+          routerLinkActive="active-tab"
+          class="nav-link"
+          *ngIf="auth.isAuthenticated$ | async"
+        >
+          Routes
+        </a>
+
       </div>      
            
       
