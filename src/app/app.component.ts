@@ -21,6 +21,8 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'Next Stop KHG';
   private scheduleSubscription!: Subscription;
 
+  isFlashing = false;
+
   stopId!: number;
   stopName!: string;
 
@@ -105,9 +107,27 @@ export class AppComponent implements OnInit, OnDestroy {
         this.scheduleId = data[0]?.scheduleId;
         this.routeStopSchedules = data[0]?.routeStopSchedules || [];
         this.fetchRouteDetails(data[0]?.routeId);
+
+        // pull out time for flshing logic
+        const now = new Date();
+
+        const providedTime = new Date(now);
+        providedTime.setMinutes(data[0]?.routeStopSchedules[0].time.minute);
+        providedTime.setHours(data[0]?.routeStopSchedules[0].time.hour);
+
+        const timeDifference = providedTime.getTime() - now.getTime();
+
+        if (timeDifference > 0 && timeDifference <= 5 * 60 * 1000) {
+            this.isFlashing = true;
+        } else {
+            this.isFlashing = false;
+        }
       },
       error: (err) => {
-        console.error('Error fetching connections:', err);
+        console.info('Error fetching connections:', err);
+        if (this.isFlashing) {
+          this.isFlashing = false;
+        }
         this.routeStopSchedules = [];
       },
     });
